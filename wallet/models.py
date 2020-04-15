@@ -86,8 +86,8 @@ class MoneyTransaction(models.Model):
         """
         if (self.amount < 0) and (abs(self.amount) > self.wallet.balance):
             raise ex
-        self.wallet.balance += self.amount
         super().save(*args, **kwargs)
+        self.wallet.balance += self.amount
         self.wallet.save()
 
     def delete(self, *args, **kwargs):
@@ -98,8 +98,8 @@ class MoneyTransaction(models.Model):
         """
         if (self.amount > 0) and (self.amount > self.wallet.balance):
             raise ex
-        self.wallet.balance -= self.amount
         super().delete(*args, **kwargs)
+        self.wallet.balance -= self.amount
         self.wallet.save()
 
     class Meta:
