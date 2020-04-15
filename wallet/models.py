@@ -11,9 +11,10 @@ from django.db import models
 from walletdjango import settings
 
 
-decimal.getcontext().prec = 2
+decimal.getcontext().prec = settings.WALLET_MAX_DIGITS+2
+decimal.getcontext().rounding = decimal.ROUND_05UP
 
-ex = exceptions.ValidationError(
+insufficient_funds = exceptions.ValidationError(
     message='Operation with transaction rejected: '
             'cannot decrease wallet balance below zero',
     code='insufficient_funds'
@@ -85,7 +86,7 @@ class MoneyTransaction(models.Model):
         :return: None - on error, amount - on success
         """
         if (self.amount < 0) and (abs(self.amount) > self.wallet.balance):
-            raise ex
+            raise insufficient_funds
         super().save(*args, **kwargs)
         self.wallet.balance += self.amount
         self.wallet.save()
@@ -97,7 +98,7 @@ class MoneyTransaction(models.Model):
         :return: None - on error, amount - on success
         """
         if (self.amount > 0) and (self.amount > self.wallet.balance):
-            raise ex
+            raise insufficient_funds
         super().delete(*args, **kwargs)
         self.wallet.balance -= self.amount
         self.wallet.save()
