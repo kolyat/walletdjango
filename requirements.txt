@@ -3,3 +3,7 @@ django==3.0.5
 djangorestframework==3.11.0
 drf-nested-routers==0.91
 django-markdownify==0.8.0
+
+pytest==5.4.1
+pytest-django==3.9.0
+fastjsonschema==2.14.4
