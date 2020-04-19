@@ -112,6 +112,55 @@ STATIC_URL = '/static/'
 # ]
 
 #
+# django-markdownify settings
+#
+MARKDOWNIFY_WHITELIST_TAGS = [
+  'a',
+  'abbr',
+  'acronym',
+  'b',
+  'blockquote',
+  'em',
+  'i',
+  'li',
+  'ol',
+  'p',
+  'strong',
+  'ul'
+]
+MARKDOWNIFY_WHITELIST_ATTRS = [
+    'href',
+    'src',
+    'alt',
+]
+MARKDOWNIFY_WHITELIST_STYLES = [
+    'color',
+    'font-weight'
+]
+MARKDOWNIFY_WHITELIST_PROTOCOLS = [
+    'http',
+    'https',
+]
+MARKDOWNIFY_MARKDOWN_EXTENSIONS = [
+    'markdown.extensions.extra',
+    'markdown.extensions.attr_list',
+    'markdown.extensions.def_list',
+    'markdown.extensions.fenced_code',
+    'markdown.extensions.footnotes',
+    'markdown.extensions.md_in_html',
+    'markdown.extensions.tables',
+    'markdown.extensions.codehilite',
+    'markdown.extensions.legacy_attrs',
+    'markdown.extensions.legacy_em',
+    'markdown.extensions.meta',
+    # 'markdown.extensions.nl2br'
+]
+MARKDOWNIFY_STRIP = True
+MARKDOWNIFY_BLEACH = False
+MARKDOWNIFY_LINKIFY_TEXT = True
+MARKDOWNIFY_LINKIFY_PARSE_EMAIL = True
+
+#
 # Amount limitations of wallet balance and money transaction
 #
 WALLET_MAX_DIGITS = 6       # -999.999,99 <= x <= 999.999,99
