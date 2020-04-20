@@ -65,7 +65,6 @@ class MoneyTransaction(models.Model):
     amount = models.DecimalField(
         null=False, blank=False, unique=False,
         max_digits=settings.TRANSACTION_MAX_DIGITS+2, decimal_places=2,
-        default=decimal.Decimal('0.00'),
         editable=True, verbose_name='Amount'
     )
     comments = models.TextField(
