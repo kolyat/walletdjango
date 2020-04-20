@@ -13,7 +13,7 @@ validate_transaction = fastjsonschema.compile({
         'transaction': {
             'type': 'object',
             'properties': {
-                'wallet': {'type': 'integer', 'minimum': 0},
+                'wallet': {'type': 'integer', 'minimum': 1},
                 'amount': {'type': 'string', 'pattern': '[0-9]+\.[0-9]{2}'},
                 'comments': {'type': 'string'}
             },
@@ -35,7 +35,10 @@ validate_transaction = fastjsonschema.compile({
             'properties': {
                 'comments': {
                     'type': 'array',
-                    'items': {'type': 'string'}
+                    'contains': [
+                        {'type': 'string'},
+                        {'type': 'null'}
+                    ]
                 }
             }
         },
