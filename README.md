@@ -82,6 +82,54 @@ Response data:
 }
 ```
 
+#### List wallets
+
+Retrieve list of all wallets.
+
+* **URL**:
+`/api/wallet/`
+
+* **Method**:
+`GET`
+  
+* **URL parameters**:
+`none`
+
+* **Data parameters**:
+`none`
+
+* **Success response**
+    * Code: `200 OK`
+
+* **Error response**
+`none`
+ 
+##### Sample call
+
+Request:
+`GET /api/wallet/`
+
+Response data:
+```json
+[
+    {
+        "id": 1,
+        "name": "empty_wallet",
+        "balance": "0.00"
+    },
+    {
+        "id": 3,
+        "name": "main_wallet",
+        "balance": "1.88"
+    },
+    {
+        "id": 5,
+        "name": "123",
+        "balance": "100.15"
+    }
+]
+```
+
 
 ### Transactions
 
@@ -285,3 +333,28 @@ Response data:
     }
 ]
 ```
+
+#### Delete transaction
+
+* **URL**:
+`/api/wallet/<int:wallet_pk>/transaction/<int:transaction_pk>/`
+
+* **Method**:
+`DELETE`
+  
+* **URL parameters**:
+`none`
+
+* **Data parameters**:
+`none`
+
+* **Success response**
+    * Code: `204 NO CONTENT`
+
+* **Error response**
+    * Code: `404 NOT FOUND`
+ 
+##### Sample call
+
+Request:
+`DELETE /api/wallet/3/transaction/3/`
