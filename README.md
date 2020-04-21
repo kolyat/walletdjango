@@ -48,7 +48,7 @@ Response data:
 
 #### Get wallet
 
-Retrieve info about specified wallet.
+Retrieve wallet status, name and balance.
 
 * **URL**:
 `/api/wallet/<int:wallet_pk>/`
@@ -131,4 +131,157 @@ Response data:
     "amount": "100.15",
     "comments": "Some comments here"
 }
+```
+
+#### Get transaction
+
+Retrieve info about specified transaction.
+
+* **URL**:
+`/api/wallet/<int:wallet_pk>/transaction/<int:transaction_pk>/`
+
+* **Method**:
+`GET`
+  
+* **URL parameters**:
+`none`
+
+* **Data parameters**:
+`none`
+
+* **Success response**
+    * Code: `200 OK`
+
+* **Error response**
+    * Code: `404 NOT FOUND`
+ 
+##### Sample call
+
+Request:
+`GET /api/wallet/3/transaction/3/`
+
+Response data:
+```json
+{
+    "id": 3,
+    "created": "2020-04-19T13:30:59.438048Z",
+    "amount": "-100.11",
+    "comments": "",
+    "wallet": 3
+}
+```
+
+#### List transactions (wallet)
+
+List all transactions of specified wallet.
+
+* **URL**:
+`/api/wallet/<int:wallet_pk>/transaction/`
+
+* **Method**:
+`GET`
+  
+* **URL parameters**:
+`none`
+
+* **Data parameters**:
+`none`
+
+* **Success response**
+    * Code: `200 OK`
+
+* **Error response**
+`none`
+ 
+##### Sample call
+
+Request:
+`GET /api/wallet/3/transaction/`
+
+Response data:
+```json
+[
+    {
+        "id": 3,
+        "created": "2020-04-19T13:30:59.438048Z",
+        "amount": "-100.11",
+        "comments": "",
+        "wallet": 3
+    },
+    {
+        "id": 2,
+        "created": "2020-04-19T13:30:59.422448Z",
+        "amount": "101.99",
+        "comments": "",
+        "wallet": 3
+    }
+]
+```
+
+#### List all transactions
+
+Retrieve full transaction list of all wallets.
+
+* **URL**:
+`/api/transactions/`
+
+* **Method**:
+`GET`
+  
+* **URL parameters**:
+`none`
+
+* **Data parameters**:
+`none`
+
+* **Success response**
+    * Code: `200 OK`
+
+* **Error response**
+`none`
+ 
+##### Sample call
+
+Request:
+`GET /api/transactions/`
+
+Response data:
+```json
+[
+    {
+        "id": 14,
+        "created": "2020-04-19T13:30:59.672048Z",
+        "amount": "0.09",
+        "comments": "",
+        "wallet": 4
+    },
+    {
+        "id": 4,
+        "created": "2020-04-19T13:30:59.469248Z",
+        "amount": "99999.99",
+        "comments": "",
+        "wallet": 4
+    },
+    {
+        "id": 3,
+        "created": "2020-04-19T13:30:59.438048Z",
+        "amount": "-100.11",
+        "comments": "",
+        "wallet": 3
+    },
+    {
+        "id": 2,
+        "created": "2020-04-19T13:30:59.422448Z",
+        "amount": "101.99",
+        "comments": "",
+        "wallet": 3
+    },
+    {
+        "id": 1,
+        "created": "2020-04-19T13:30:59.391248Z",
+        "amount": "0.01",
+        "comments": "",
+        "wallet": 2
+    }
+]
 ```
