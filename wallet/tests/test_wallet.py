@@ -29,7 +29,7 @@ def test_create_wallet(db, client, payload, expected_code):
     :param payload: testing payload
     :param expected_code: expected response code
     """
-    _path = apiutils.post_wallet_path()
+    _path = apiutils.create_wallet_path()
     response = apiutils.post(db, client, _path, payload)
     assert response.status_code == expected_code
     assert data_test_wallet.validate_wallet(response.json())

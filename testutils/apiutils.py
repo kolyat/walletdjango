@@ -9,11 +9,11 @@ def get_wallet_path(wallet_pk):
     return f'/api/wallet/{wallet_pk}/'
 
 
-def post_wallet_path():
+def create_wallet_path():
     return f'/api/wallet/'
 
 
-def post_transaction_path(wallet_pk):
+def create_transaction_path(wallet_pk):
     return f'/api/wallet/{wallet_pk}/transaction/'
 
 

@@ -45,7 +45,7 @@ def test_transaction_field(db, client, field, expected_code):
     :param expected_code: expected response code
     """
     _pk = populate_db_wallet.add_wallet(os.path.basename(__file__))
-    _path = apiutils.post_transaction_path(_pk)
+    _path = apiutils.create_transaction_path(_pk)
     _data = copy.deepcopy(data_test_transaction.valid_transaction)
     _data.update(field)
     response = apiutils.post(db, client, _path, _data)
@@ -72,7 +72,7 @@ def test_transaction_partial(db, client, remove_field, expected_code):
     :param expected_code: expected response code
     """
     _pk = populate_db_wallet.add_wallet(os.path.basename(__file__))
-    _path = apiutils.post_transaction_path(_pk)
+    _path = apiutils.create_transaction_path(_pk)
     _data = copy.deepcopy(data_test_transaction.valid_transaction)
     _data.pop(remove_field)
     response = apiutils.post(db, client, _path, _data)
@@ -92,7 +92,7 @@ def test_transaction_amount_and_wallet_balance(db, client):
     """
     _pk = populate_db_wallet.add_wallet(os.path.basename(__file__))
     get_wallet_path = apiutils.get_wallet_path(_pk)
-    post_transaction_path = apiutils.post_transaction_path(_pk)
+    post_transaction_path = apiutils.create_transaction_path(_pk)
     _data = copy.deepcopy(data_test_transaction.valid_transaction)
 
     _data.update({'amount': '99999.99'})
