@@ -13,6 +13,10 @@ def get_wallet_path(wallet_pk):
     return f'/api/wallet/{wallet_pk}/'
 
 
+def list_wallets_path():
+    return f'/api/wallet/'
+
+
 def create_transaction_path(wallet_pk):
     return f'/api/wallet/{wallet_pk}/transaction/'
 
@@ -91,5 +95,8 @@ def delete(db, client, path):
     logging.info(f'DELETE {path}')
     _response = client.delete(path)
     logging.info(f'Status code: {_response.status_code}')
-    logging.info(_response.json())
+    try:
+        logging.info(_response.json())
+    except TypeError:
+        logging.info('No response body')
     return _response

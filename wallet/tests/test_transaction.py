@@ -5,6 +5,7 @@
 import os
 import logging
 import copy
+import decimal
 import pytest
 
 from django.core import exceptions
@@ -167,3 +168,84 @@ def test_transaction_amount_and_wallet_balance(db, client):
     response = apiutils.get(db, client, get_wallet_path)
     logging.info(f'Wallet {_pk} balance: {response.json()["balance"]}')
     assert response.json()['balance'] == '999999.99'
+
+
+def test_transaction_retrieve(db, client):
+    """Test transaction retrieval
+
+    :param db: database access fixture
+    :param client: Django client fixture
+    """
+    w_pk = populate_db_wallet.add_wallet()
+    t_pk = populate_db_wallet.add_transaction(
+        w_pk,
+        decimal.Decimal(data_test_transaction.valid_transaction['amount'])
+    )
+    _path = apiutils.get_transaction_path(w_pk, t_pk)
+    response = apiutils.get(db, client, _path)
+    assert response.status_code == 200
+    assert data_test_transaction.validate_transaction(response.json())
+    assert response.json()['amount'] == \
+        data_test_transaction.valid_transaction['amount']
+
+
+def test_transaction_delete(db, client):
+    """Test transaction deletion
+
+    :param db: database access fixture
+    :param client: Django client fixture
+    """
+    w_pk = populate_db_wallet.add_wallet()
+    w_path = apiutils.get_wallet_path(w_pk)
+    t_pk = populate_db_wallet.add_transaction(
+        w_pk,
+        decimal.Decimal(data_test_transaction.valid_transaction['amount'])
+    )
+    t_path = apiutils.get_transaction_path(w_pk, t_pk)
+    response = apiutils.get(db, client, w_path)
+    assert response.json()['balance'] == \
+        data_test_transaction.valid_transaction['amount']
+    response = apiutils.delete(db, client, t_path)
+    assert response.status_code == 204
+    response = apiutils.get(db, client, t_path)
+    assert response.status_code == 404
+    response = apiutils.get(db, client, w_path)
+    assert response.json()['balance'] == '0.00'
+
+
+def test_transactions_list_wallet(db, client):
+    """List transactions of specified wallet
+
+    :param db: database access fixture
+    :param client: Django client fixture
+    """
+    w_pk = populate_db_wallet.add_wallet()
+    for _ in (1, 2, 3):
+        populate_db_wallet.add_transaction(
+            w_pk,
+            decimal.Decimal(data_test_transaction.valid_transaction['amount'])
+        )
+    _path = apiutils.list_wallet_transactions_path(w_pk)
+    response = apiutils.get(db, client, _path)
+    assert response.status_code == 200
+    assert len(response.json()) == 3
+
+
+def test_transactions_list_all(db, client):
+    """List all transactions
+
+    :param db: database access fixture
+    :param client: Django client fixture
+    """
+    for i in (1, 2, 3):
+        w_pk = populate_db_wallet.add_wallet(f'wallet-{i}')
+        for _ in (1, 2, 3):
+            populate_db_wallet.add_transaction(
+                w_pk,
+                decimal.Decimal(
+                    data_test_transaction.valid_transaction['amount'])
+            )
+    _path = apiutils.list_all_transactions_path()
+    response = apiutils.get(db, client, _path)
+    assert response.status_code == 200
+    assert len(response.json()) == 9

@@ -13,7 +13,9 @@ validate_transaction = fastjsonschema.compile({
         'transaction': {
             'type': 'object',
             'properties': {
+                'id': {'type': 'integer', 'minimum': 1},
                 'wallet': {'type': 'integer', 'minimum': 1},
+                'created': {'type': 'string', 'format': 'date-time'},
                 'amount': {'type': 'string', 'pattern': '[0-9]+\.[0-9]{2}'},
                 'comments': {'type': 'string'}
             },
@@ -23,6 +25,12 @@ validate_transaction = fastjsonschema.compile({
     },
     'anyOf': [
         {'$ref': '#/definitions/transaction'},
+        {
+            'type': 'array',
+            'minItems': 0,
+            'uniqueItems': True,
+            'items': {'$ref': '#/definitions/transaction'}
+        },
         {
             'properties': {
                 'wallet': {

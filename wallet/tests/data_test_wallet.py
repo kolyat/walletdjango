@@ -24,6 +24,12 @@ validate_wallet = fastjsonschema.compile({
     'anyOf': [
         {'$ref': '#/definitions/wallet'},
         {
+            'type': 'array',
+            'minItems': 0,
+            'uniqueItems': True,
+            'items': {'$ref': '#/definitions/wallet'}
+        },
+        {
             'properties': {
                 'name': {
                     'type': 'array',

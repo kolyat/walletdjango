@@ -27,7 +27,7 @@ def add_wallet(name=models.new_wallet_name()):
     return _wallet.pk
 
 
-def add_transaction(wallet_pk, amount=decimal.Decimal('0.00'), comments=''):
+def add_transaction(wallet_pk, amount, comments=''):
     """Add transaction to a wallet
 
     :param wallet_pk: primary key of a wallet
