@@ -46,6 +46,44 @@ Response data:
 }
 ```
 
+#### Update wallet
+
+* **URL**:
+`/api/wallet/<int:wallet_pk>/`
+
+* **Method**:
+`PUT`, `PATCH`
+  
+* **URL parameters**:
+`none`
+
+* **Data parameters**:
+    * Required:<br>
+        `"name": string` - name of a wallet
+
+* **Success response**
+    * Code: `200 OK`
+
+* **Error response**
+    * Code: `400 BAD REQUEST`
+        * `{"name": ["Ensure this field has no more than 254 characters."]}`
+ 
+##### Sample call
+
+Request:
+`PATCH /api/wallet/3/`
+```json
+{
+    "name": "New name of a wallet"
+}
+```
+Response data:
+```json
+{
+    "name": "New name of a wallet"
+}
+```
+
 #### Get wallet
 
 Retrieve wallet status, name and balance.
@@ -129,6 +167,31 @@ Response data:
     }
 ]
 ```
+
+#### Delete wallet
+
+* **URL**:
+`/api/wallet/<int:wallet_pk>/`
+
+* **Method**:
+`DELETE`
+  
+* **URL parameters**:
+`none`
+
+* **Data parameters**:
+`none`
+
+* **Success response**
+    * Code: `204 NO CONTENT`
+
+* **Error response**
+    * Code: `404 NOT FOUND`
+ 
+##### Sample call
+
+Request:
+`DELETE /api/wallet/3/transaction/3/`
 
 
 ### Transactions
