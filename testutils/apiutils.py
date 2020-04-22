@@ -9,12 +9,20 @@ def create_wallet_path():
     return f'/api/wallet/'
 
 
+def put_patch_wallet_path(wallet_pk):
+    return f'/api/wallet/{wallet_pk}/'
+
+
 def get_wallet_path(wallet_pk):
     return f'/api/wallet/{wallet_pk}/'
 
 
 def list_wallets_path():
     return f'/api/wallet/'
+
+
+def delete_wallet_path(wallet_pk):
+    return f'/api/wallet/{wallet_pk}/'
 
 
 def create_transaction_path(wallet_pk):
@@ -31,6 +39,10 @@ def list_wallet_transactions_path(wallet_pk):
 
 def list_all_transactions_path():
     return f'/api/transactions/'
+
+
+def delete_transaction_path(wallet_pk, transaction_pk):
+    return f'/api/wallet/{wallet_pk}/transaction/{transaction_pk}/'
 
 
 def get(db, client, path):
@@ -66,18 +78,35 @@ def post(db, client, path, data):
     return _response
 
 
-def put(db, client, path, data):
+def put(db, drf_client, path, data):
     """Client PUT wrapper
 
     :param db: database access fixture
-    :param client: Django client fixture
+    :param drf_client: Django Rest Framework client fixture
     :param path: PUT path
     :param data: payload
 
     :return: response object
     """
     logging.info(f'PUT {path}: {data}')
-    _response = client.put(path, data=data)
+    _response = drf_client.put(path, data=data)
+    logging.info(f'Status code: {_response.status_code}')
+    logging.info(_response.json())
+    return _response
+
+
+def patch(db, drf_client, path, data):
+    """Client PATCH wrapper
+
+    :param db: database access fixture
+    :param drf_client: Django Rest Framework client fixture
+    :param path: PATCH path
+    :param data: payload
+
+    :return: response object
+    """
+    logging.info(f'PATCH {path}: {data}')
+    _response = drf_client.patch(path, data=data)
     logging.info(f'Status code: {_response.status_code}')
     logging.info(_response.json())
     return _response
