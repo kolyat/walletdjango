@@ -1,5 +1,5 @@
 psycopg2==2.8.5
-django==3.0.5
+django==3.0.7
 djangorestframework==3.11.0
 drf-nested-routers==0.91
 django-markdownify==0.8.0
