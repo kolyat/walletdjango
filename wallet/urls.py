@@ -10,11 +10,11 @@ from . import views
 
 
 wallet_router = routers.SimpleRouter()
-wallet_router.register('wallet', views.UserWalletViewSetCRUDL)
+wallet_router.register('wallet', views.UserWalletViewSet)
 
 transaction_router = routers.NestedSimpleRouter(wallet_router, 'wallet',
                                                 lookup='wallet')
-transaction_router.register('transaction', views.MoneyTransactionViewSetCRDL,
+transaction_router.register('transaction', views.MoneyTransactionViewSet,
                             basename='wallet-transaction')
 
 
@@ -25,5 +25,5 @@ urlpatterns = [
     urls.path('api/', urls.include(wallet_router.urls)),
     urls.path('api/', urls.include(transaction_router.urls)),
     urls.path('api/transactions/',
-              views.MoneyTransactionsListView.as_view({'get': 'list'}))
+              views.MoneyTransactionsView.as_view({'get': 'list'}))
 ]

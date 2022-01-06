@@ -46,12 +46,12 @@ class IndexPage(views.generic.TemplateView):
         return context
 
 
-class UserWalletViewSetCRUDL(mixins.CreateModelMixin,
-                             mixins.RetrieveModelMixin,
-                             mixins.UpdateModelMixin,
-                             mixins.DestroyModelMixin,
-                             mixins.ListModelMixin,
-                             MultipleSerializerGenericViewSet):
+class UserWalletViewSet(mixins.CreateModelMixin,
+                        mixins.RetrieveModelMixin,
+                        mixins.UpdateModelMixin,
+                        mixins.DestroyModelMixin,
+                        mixins.ListModelMixin,
+                        MultipleSerializerGenericViewSet):
     queryset = models.UserWallet.objects.all()
     serializer_class = serializers.UserWalletSerializerCU
     serializers = {
@@ -62,11 +62,11 @@ class UserWalletViewSetCRUDL(mixins.CreateModelMixin,
     }
 
 
-class MoneyTransactionViewSetCRDL(mixins.CreateModelMixin,
-                                  mixins.RetrieveModelMixin,
-                                  mixins.DestroyModelMixin,
-                                  mixins.ListModelMixin,
-                                  MultipleSerializerGenericViewSet):
+class MoneyTransactionViewSet(mixins.CreateModelMixin,
+                              mixins.RetrieveModelMixin,
+                              mixins.DestroyModelMixin,
+                              mixins.ListModelMixin,
+                              MultipleSerializerGenericViewSet):
     serializer_class = serializers.MoneyTransactionSerializerR
     serializers = {
         'create': serializers.MoneyTransactionSerializerC,
@@ -79,7 +79,7 @@ class MoneyTransactionViewSetCRDL(mixins.CreateModelMixin,
             wallet=self.kwargs['wallet_pk'])
 
 
-class MoneyTransactionsListView(mixins.ListModelMixin,
-                                viewsets.GenericViewSet):
+class MoneyTransactionsView(mixins.ListModelMixin,
+                            viewsets.GenericViewSet):
     queryset = models.MoneyTransaction.objects.all()
     serializer_class = serializers.MoneyTransactionSerializerR
