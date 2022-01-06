@@ -1,4 +1,4 @@
-# Copyright (c) 2021 Kirill 'Kolyat' Kiselnikov
+# Copyright (c) 2022 Kirill 'Kolyat' Kiselnikov
 # This file is the part of walletdjango, released under modified MIT license
 # See the file LICENSE included in this distribution
 
