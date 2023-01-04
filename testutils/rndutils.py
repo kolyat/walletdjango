@@ -1,4 +1,4 @@
-# Copyright (c) 2017-2022 Kirill 'Kolyat' Kiselnikov
+# Copyright (c) 2017-2023 Kirill 'Kolyat' Kiselnikov
 # This file is the part of testutils, released under modified MIT license
 
 import random
